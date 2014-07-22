@@ -1,0 +1,11 @@
+<h1>Followers for {{main_user.username}}</h1>
+
+{% if userlinks %}
+    <ul>
+        {% for userlink in userlinks %}
+            <li>{{userlink.from_user}}</li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>This sad, sad person has no friends. How sad.</p>
+{% endif %}
