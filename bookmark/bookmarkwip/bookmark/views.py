@@ -10,7 +10,7 @@ from bookmark.models import Page
 from bookmark.forms import PageForm, UserForm, UserProfileForm
 
 def decode_url(url):
-    return url.replace(' ', '_')
+    return url.replace('_', ' ')
   
 def index(request):
     # Obtain the context from the HTTP request.
@@ -102,10 +102,10 @@ def add_page(request, category_name_url):
         if form.is_valid():
             new_page = form.save(commit=False)
             try:
-                cur_cat = Category.objects.get(name=category_name_url)
+                cur_cat = Category.objects.get(name=decode_url(category_name_url))
                 new_page.category_id = cur_cat.id
             except Category.DoesNotExist:
-                return index(request)
+                return category(request, category_name_url)
             new_page.save()
             return category(request, category_name_url)
         else:
@@ -113,7 +113,7 @@ def add_page(request, category_name_url):
     else:
         form = PageForm()
         
-    return render_to_response('bookmark/add_page.html', {'form': form, 'category': category_name_url}, context)
+    return render_to_response('bookmark/add_page.html', {'form': form, 'category_name_url': category_name_url}, context)
 
 def register(request):
     context = RequestContext(request)
