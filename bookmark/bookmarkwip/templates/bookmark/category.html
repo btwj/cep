@@ -1,24 +1,20 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Bookmark</title>
-    </head>
+{% extends "bookmark/base.html" %}
+{% block title %}{{Category_name}}{% endblock %}
 
-    <body>
-        <h1>{{ category_name }}</h1>
-        {% if category %}
-            {% if pages %}
-            <ul>
-                {% for page in pages %}
-                <li><a href="{{ page.url }}">{{ page.title }}</a></li>
-                {% endfor %}
-            </ul>
-            {% else %}
-                <strong>No pages currently in category.</strong>
-            {% endif %}
-            <a href="/bookmark/category/{{category_name_url}}/add_page">Add a New Page!!!111!1!!1!11</a>
+{% block content %}
+    <h1>{{ category_name }}</h1>
+    {% if category %}
+        {% if pages %}
+        <ul class="list-group">
+            {% for page in pages %}
+            <li class="list-group-item"><a href="{{ page.url }}">{{ page.title }}</a></li>
+            {% endfor %}
+        </ul>
         {% else %}
-            The specified category {{ category_name }} does not exist!
+            <strong>No pages currently in category.</strong>
         {% endif %}
-    </body>
-</html>
+        <a href="/bookmark/category/{{category_name_url}}/add_page" class="btn btn-primary">New Page</a>
+    {% else %}
+        The specified category {{ category_name }} does not exist!
+    {% endif %}
+{% endblock %}

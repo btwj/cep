@@ -1,27 +1,25 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Bookmark</title>
-    </head>
+{% extends "bookmark/base.html" %}
+{% load newfilters %}
+{% block title %}New Category{% endblock %}
 
-    <body>
-        <h1>Add a Category</h1>
+{% block content %}
+    <h1>Add a Category</h1>
 
-        <form id="category_form" method="post" action="/bookmark/add_category/">
+    <form id="category_form" method="post" action="/bookmark/add_category/">
 
-            {% csrf_token %}
-            {% for hidden in form.hidden_fields %}
-                {{ hidden }}
-            {% endfor %}
+        {% csrf_token %}
+        {% for hidden in form.hidden_fields %}
+            {{ hidden }}
+        {% endfor %}
 
-            {% for field in form.visible_fields %}
+        {% for field in form.visible_fields %}
+            <div class="form-group">
                 {{ field.errors }}
-                {{ field.help_text }}
-                {{ field }}
-            {% endfor %}
+                <label for="{{field.name}}">{{field.name|title}}</label>
+                {{ field | addcss:"form-control"}}
+            </div>
+        {% endfor %}
 
-            <input type="submit" name="submit" value="Create Category" />
-        </form>
-    </body>
-
-</html>
+        <input type="submit" name="submit" value="New Category" class="btn btn-primary"/>
+    </form>
+{% endblock %}

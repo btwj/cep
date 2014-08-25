@@ -1,11 +1,8 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Bookmark</title>
-    </head>
-    <body>
-        <h1>Register with Bookmark</h1>
-        
+{% extends "bookmark/base.html" %}
+{% load newfilters %}
+{% block title %}Register{% endblock %}
+
+{% block content %}
         {% if registered %}
         Bookmark says: <strong>thank you for registering!</strong>
         <a href="/bookmark/">Return to the homepage.</a><br />
@@ -14,11 +11,22 @@
         
         <form id="user_form" method="post" action="/bookmark/register/" enctype="multipart/form-data">
             {% csrf_token %}
-            {{ user_form.as_p }}
-            {{ profile_form.as_p }}
+            {% for field in user_form.visible_fields %}
+                <div class="form-group">
+                    {{ field.errors }}
+                    <label for="{{field.name}}">{{field.name|title}}</label>
+                    {{ field | addcss:"form-control"}}
+                </div>
+            {% endfor %}
+            {% for field in profile_form.visible_fields %}
+                <div class="form-group">
+                    {{ field.errors }}
+                    <label for="{{field.name}}">{{field.name|title}}</label>
+                    {{ field | addcss:"form-control"}}
+                </div>
+            {% endfor %}
             
-            <input type="submit" name="submit" value="Register" />
+            <input type="submit" name="submit" value="Register" class="btn btn-primary"/>
         </form>
         {% endif %}
-    </body>
-</html>
+{% endblock %}

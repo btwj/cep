@@ -113,7 +113,7 @@ def add_page(request, category_name_url):
     else:
         form = PageForm()
         
-    return render_to_response('bookmark/add_page.html', {'form': form, 'category_name_url': category_name_url}, context)
+    return render_to_response('bookmark/add_page.html', {'form': form, 'category_name_url': category_name_url, 'category_name': decode_url(category_name_url)}, context)
 
 def register(request):
     context = RequestContext(request)
@@ -134,7 +134,7 @@ def register(request):
             profile.user = user
             
             if 'picture' in request.FILES:
-                profile.picture = request.FILES('picture')
+                profile.picture = request.FILES['picture']
             
             profile.save()
             registered = True

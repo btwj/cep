@@ -1,18 +1,18 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Bookmark</title>
-    </head>
-    
-    <body>
-        <h1>Login to Bookmark</h1>
-        <form id="login_form" method="post" action="/bookmark/login/">
-            {% csrf_token %}
-            Username: <input type="text" name="username" value="" size="50" />
-            <br />
-            Password: <input type="password" name="password" value="" size="50" />
-            <br />
-            <input type="submit" value="submit" />
-        </form>
-    </body>
-</html>
+{% extends "bookmark/base.html" %}
+{% block title %}Login{% endblock %}
+
+{% block content %}
+    <h1>Login to Bookmark</h1>
+    <form id="login_form" method="post" action="/bookmark/login/">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" class="form-control" name="username" placeholder="username" size="50">
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" class="form-control" name="password" placeholder="password" size="50">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+{% endblock %}
